@@ -41,9 +41,9 @@ Switch ports were configured in access mode and assigned to their respective VLA
 
 This is useful from a security perspective - it means a compromise in one department doesn't automatically give access to the other.
 
-![VLAN configuration on switch](3.png)
+![VLAN configuration on switch](8.png)
 
-![Devices assigned to VLANs](4.png)
+![Devices assigned to VLANs](6.png)
 
 ---
 
@@ -59,11 +59,11 @@ The router has a separate interface for each VLAN, each with its own IP address.
 
 Without this setup, the VLANs would be completely isolated. With it, communication is possible but controlled - everything passes through the router, which means it can also be filtered or monitored.
 
-![Inter-VLAN routing configuration](5.png)
+![Inter-VLAN routing configuration](7.png)
 
-![Routing table](6.png)
+![Routing table](3.png)
 
-![Switch VLAN configuration](8.png)
+![Switch VLAN configuration](4.png)
 
 ---
 
@@ -75,7 +75,7 @@ After configuration I tested communication between devices:
 - Devices in different VLANs — successful ping through the router
 - Confirmed DHCP was assigning correct IPs and gateways to all devices
 
-![Connectivity test](7.png)
+![Connectivity test](5.png)
 
 ![Ping results](9.png)
 

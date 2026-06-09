@@ -11,8 +11,6 @@ Network configuration lab built in Cisco Packet Tracer as part of a cybersecurit
 
 A small network with two VLANs connected through a router, where devices get their IP addresses automatically via DHCP. The goal was to configure the network so that devices within the same VLAN can communicate with each other, but can only reach devices in the other VLAN through the router.
 
-![Network topology](1.png)
-
 ---
 
 ## How devices get their IP addresses - DHCP
@@ -26,7 +24,11 @@ Instead of manually assigning IP addresses to every device, the network uses DHC
 
 The router's interface address is used as the default gateway, so once devices have their IPs they can reach other networks through it.
 
+![Network topology](1.png)
+
 ![DHCP configuration](2.png)
+
+![Switch VLAN configuration](4.png)
 
 ---
 
@@ -49,10 +51,9 @@ This is useful from a security perspective - it means a compromise in one depart
 
 ## How the router enables inter-VLAN routing
 
-VLANs isolate traffic, but sometimes devices in different VLANs do need to communicate - just in a controlled way through the router. This is called inter-VLAN routing.
+VLANs isolate traffic, but sometimes devices in different VLANs do need to communicate - just in a controlled way through the router. This is called inter-VLAN routing. The router has a separate interface for each VLAN, each with its own IP address. That IP becomes the default gateway for devices in that VLAN. 
 
-The router has a separate interface for each VLAN, each with its own IP address. That IP becomes the default gateway for devices in that VLAN. When a device in VLAN 10 wants to reach a device in VLAN 20:
-
+When a device in VLAN 10 wants to reach a device in VLAN 20:
 1. It sends the packet to its default gateway - the router's VLAN 10 interface
 2. The router checks its routing table and forwards the packet through the VLAN 20 interface
 3. The packet arrives at the destination in VLAN 20
@@ -63,27 +64,29 @@ Without this setup, the VLANs would be completely isolated. With it, communicati
 
 ![Routing table](3.png)
 
-![Switch VLAN configuration](4.png)
+
 
 ---
 
 ## Testing connectivity
 
-After configuration I tested communication between devices:
+After configuration I tested communication between devices to confirm everything was working correctly.
 
-- Devices within the same VLAN — successful ping
-- Devices in different VLANs — successful ping through the router
-- Confirmed DHCP was assigning correct IPs and gateways to all devices
+**Same VLAN - ping succeeds:**
 
-![Connectivity test](5.png)
+![Ping between PCs in the same VLAN — 0% packet loss](5.png)
 
-![Ping results](9.png)
+**VLAN isolation test - one succeeds, one times out:**
+
+![Ping test — device in VLAN reaches server, but cannot reach device in isolated segment](9.png)
+
+This second test confirms the VLAN boundary is working - the first ping succeeds because it goes through the router, while the second times out because that segment is isolated as expected.
 
 ---
 
-## What I learned
+## What I have learned
 
-Networking concepts like DHCP, VLANs, and routing are easy to read about but actually configuring them makes them click in a different way. The key insight from this lab is that VLANs give you segmentation for free — you don't need separate physical hardware to isolate departments — but you need a router to let them talk when necessary, and that router becomes a natural place to apply security policy.
+Networking concepts like DHCP, VLANs, and routing are easy to read about but actually configuring them makes them click in a different way. The key insight from this lab is that VLANs give you segmentation for free - you don't need separate physical hardware to isolate departments, but you need a router to let them talk when necessary and that router becomes a natural place to apply security policy.
 
 ---
 
